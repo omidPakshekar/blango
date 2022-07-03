@@ -7,6 +7,7 @@ import dj_database_url
 
 
 class Dev(Configuration):
+    INTERNAL_IPS = ["192.168.11.179"]
 
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
     BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,6 +46,8 @@ class Dev(Configuration):
         # third package party
         "crispy_forms",
         "crispy_bootstrap5",
+        "debug_toolbar",
+
 
     ]
 
@@ -56,6 +59,8 @@ class Dev(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+
     ]
 
     ROOT_URLCONF = 'blango.urls'
