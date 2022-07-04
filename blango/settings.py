@@ -43,6 +43,7 @@ class Dev(Configuration):
         'django.contrib.staticfiles',
         #my app 
         "blog",
+        'blango_auth',
         # third package party
         "crispy_forms",
         "crispy_bootstrap5",
@@ -151,7 +152,9 @@ class Dev(Configuration):
       'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
       'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
     ]
-
+    
+    AUTH_USER_MODEL = "blango_auth.User"
+    
     LOGGING = {
         "version": 1,
         "disable_existing_loggers": False,
