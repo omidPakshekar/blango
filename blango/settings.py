@@ -154,7 +154,9 @@ class Dev(Configuration):
     ]
     
     AUTH_USER_MODEL = "blango_auth.User"
-    
+
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
     LOGGING = {
         "version": 1,
         "disable_existing_loggers": False,
@@ -193,3 +195,6 @@ class Dev(Configuration):
             "level": "DEBUG",
         },
     }
+
+    # SIGNUP - EMAIL ACTIVATION 
+    ACCOUNT_ACTIVATION_DAYS = 7
