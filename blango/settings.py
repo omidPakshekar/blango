@@ -49,7 +49,7 @@ class Dev(Configuration):
         "crispy_bootstrap5",
         "debug_toolbar",
         'rest_framework',
-
+        'rest_framework.authtoken',
 
     ]
 
