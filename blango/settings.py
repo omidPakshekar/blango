@@ -50,7 +50,7 @@ class Dev(Configuration):
         "debug_toolbar",
         'rest_framework',
         'rest_framework.authtoken',
-
+        'drf_yasg',
     ]
 
     MIDDLEWARE = [
@@ -70,7 +70,10 @@ class Dev(Configuration):
     TEMPLATES = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': [BASE_DIR / 'templates'],
+            'DIRS': [
+                os.path.join(BASE_DIR, "templates"),
+                BASE_DIR / 'templates'
+                ],
             'APP_DIRS': True,
             'OPTIONS': {
                 'context_processors': [
@@ -209,4 +212,10 @@ class Dev(Configuration):
         "DEFAULT_PERMISSION_CLASSES": [
             "rest_framework.permissions.IsAuthenticatedOrReadOnly"
         ],
+    }
+    SWAGGER_SETTINGS = {
+        "SECURITY_DEFINITIONS": {
+            "Token": {"type": "apiKey", "name": "Authorization", "in": "header"},
+            "Basic": {"type": "basic"},
+        }
     }
