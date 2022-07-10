@@ -25,7 +25,7 @@ class Comment(models.Model):
     def __str__(self):
         return self.content
 class Tag(models.Model):
-    value = models.TextField(max_length=100)
+    value = models.TextField(max_length=100, unique=True)
 
     def __str__(self):
         return self.value
