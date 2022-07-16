@@ -25,11 +25,14 @@ class Comment(models.Model):
     def __str__(self):
         return self.content
 class Tag(models.Model):
-    value = models.TextField(max_length=100, unique=True)
+    value = models.TextField(max_length=100, unique=True, db_index=True)
+
+    class Meta:
+        ordering = ["value"]
 
     def __str__(self):
         return self.value
-
+    
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     created_at = models.DateTimeField(auto_now_add=True)

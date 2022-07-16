@@ -27,6 +27,8 @@ from django.utils import timezone
 from datetime import timedelta
 from django.http import Http404
 
+from blog.api.filters import PostFilterSet
+
 
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.all()
@@ -35,10 +37,17 @@ class TagViewSet(viewsets.ModelViewSet):
     @action(methods=["get"], detail=True, name="Posts with the Tag")
     def posts(self, request, pk=None):
         tag = self.get_object()
+        page = self.paginate_queryset(tag.posts)
+        if page is not None:
+            post_serializer = PostSerializer(
+                page, many=True, context={"request": request}
+            )
+            return self.get_paginated_response(post_serializer.data)
         post_serializer = PostSerializer(
             tag.posts, many=True, context={"request": request}
         )
         return Response(post_serializer.data)
+        
     
     @method_decorator(cache_page(300))
     def list(self, *args, **kwargs):
@@ -70,8 +79,11 @@ class UserDetail(generics.RetrieveAPIView):
 
 
 class PostViewSet(viewsets.ModelViewSet):
+    filterset_fields = ["author", "tags"]
     permission_classes = [AuthorModifyOrReadOnly | IsAdminUserForObject]
     queryset = Post.objects.all()
+    filterset_class = PostFilterSet
+    ordering_fields = ["published_at", "author", "title", "slug"]
 
     def get_serializer_class(self):
         if self.action in ("list", "create"):
@@ -86,9 +98,17 @@ class PostViewSet(viewsets.ModelViewSet):
         if request.user.is_anonymous:
             raise PermissionDenied("You must be logged in to see which Posts are yours")
         posts = self.get_queryset().filter(author=request.user)
+
+        page = self.paginate_queryset(posts)
+
+        if page is not None:
+            serializer = PostSerializer(page, many=True, context={"request": request})
+            return self.get_paginated_response(serializer.data)
+
         serializer = PostSerializer(posts, many=True, context={"request": request})
         return Response(serializer.data)
 
+        
     @method_decorator(cache_page(120))
     @method_decorator(vary_on_headers("Authorization", "Cookie"))
     def list(self, *args, **kwargs):
