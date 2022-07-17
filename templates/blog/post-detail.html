@@ -2,6 +2,7 @@
 {% load blog_extras cache %}
 {% block content %}
 
+
 {% if post.author.profile %}
     {% row %}
         <div class="col">
@@ -17,6 +18,15 @@
         {% include "blog/post-byline.html" %}
     </div>
 {% endrow %}
+
+{% if post.hero_image %}
+    {% row %}
+        <div class="col">
+            <img class="img-fluid" src="{{ post.hero_image.thumbnail.100x150.url }}">
+        </div>
+    {% endrow %}
+{% endif %}
+
 {% row %}
     <div class="col">
         {{ post.content|safe }}
