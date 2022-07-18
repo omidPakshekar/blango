@@ -1,9 +1,57 @@
-const theNumber = 1
-let yourName = 'Ben'
+console.log('***')
+console.log('***')
+console.time('myTimer')
+console.count('counter1')
+console.log('A normal log message')
+console.warn('Warning: something bad might happen')
+console.error('Something bad did happen!')
+console.count('counter1')
+console.log('All the things above took this long to happen:')
+console.timeEnd('myTimer')
 
-if (theNumber === 1) {
-  let yourName = 'Leo'
-  alert(yourName)
+function sayHello(yourName) {
+  if (yourName === undefined) {
+      console.log('Hello, no name')
+  } else {
+       console.log('Hello, ' + yourName)
+  }
 }
 
-alert(yourName)
+const yourName = 'Your Name'  // Put your name here
+
+console.log('Before setTimeout')
+
+setTimeout(() => {
+    sayHello(yourName)
+  }, 1000
+)
+
+console.log('After setTimeout')
+
+for(let i = 0; i < 10; i += 1) {
+  console.log('for loop i: ' + i)
+}
+
+let j = 0
+while(j < 10) {
+  console.log('while loop j: ' + j)
+  j += 1
+}
+
+let k = 10
+
+do {
+  console.log('do while k: ' + k)
+} while(k < 10)
+
+const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+numbers.forEach((value => {
+  console.log('For each value ' + value)
+}))
+
+const doubled = numbers.map(value => value * 2)
+
+console.log('Here are the doubled numbers')
+
+console.log(doubled)
