@@ -6,14 +6,16 @@ from django.shortcuts import redirect
 from blog.forms import CommentForm
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
-
+from django.urls import reverse
 
 import logging
 logger = logging.getLogger(__name__)
 
 def post_table(request):
-    return render(request, "blog/post-table.html")
-
+    print('*****\n', reverse('post-list'))
+    return render(
+        request, "blog/post-table.html", {"post_list_url": reverse("post-list")}
+    )
 # @cache_page(300)
 # @vary_on_cookie
 # def index(request):
